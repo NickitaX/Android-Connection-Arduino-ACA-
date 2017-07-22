@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="nickita.gq.aca.MainActivity">
+
+<Button
+    android:id="@+id/send_button"
+    android:text="SEND"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/close_button"
+        android:text="CLOSE CONN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/open_button"
+        android:text="OPEN CONN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="0"
+        android:id="@+id/motor_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+<SeekBar
+    android:id="@+id/motor_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+</LinearLayout>
