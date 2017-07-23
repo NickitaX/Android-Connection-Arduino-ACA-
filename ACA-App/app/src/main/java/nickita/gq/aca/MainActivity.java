@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,20 +23,21 @@ public class MainActivity extends AppCompatActivity {
     private Context mContext;
     private SeekBar mSeekBar;
     private TextView mMotorValue;
+    private Spinner mBpSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialize();
-        setUpArduinoConnection();
     }
 
-    private void setUpArduinoConnection(){
+    private void setUpArduinoConnection(int rate){
         mContext = this;
         mPhysicaloid  = new Physicaloid(this);
-        mPhysicaloid.setBaudrate(9600);
+        mPhysicaloid.setBaudrate(rate);
         if(mPhysicaloid.open()) {
-            Toast.makeText(this, "Connection established :P", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Connected on "+rate, Toast.LENGTH_LONG).show();
             mPhysicaloid.addReadListener(new ReadLisener() {
                 @Override
                 public void onRead(int size) {
@@ -48,11 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             //Error while connecting
-            Toast.makeText(this, "Cannot open", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Cannot open "+rate, Toast.LENGTH_LONG).show();
         }
     }
 
     private void initialize(){
+        mBpSpinner = (Spinner) findViewById(R.id.data_rate_spinner);
         mMotorValue = (TextView)findViewById(R.id.motor_value);
         mSeekBar = (SeekBar) findViewById(R.id.motor_bar);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -93,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
         mOpenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setUpArduinoConnection();
+                int rate = Integer.valueOf(String.valueOf(mBpSpinner.getSelectedItem()));
+                setUpArduinoConnection(rate);
+                Toast.makeText(view.getContext(), "Listening on "+rate, Toast.LENGTH_LONG).show();
             }
         });
 
